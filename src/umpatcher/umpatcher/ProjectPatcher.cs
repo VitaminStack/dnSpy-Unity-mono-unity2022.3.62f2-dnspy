@@ -54,8 +54,9 @@ namespace UnityMonoDllSourceCodePatcher {
 		}
 
 		void PatchToolsVersion() {
-			if (!TryPatchToolsVersion(0) && !TryPatchToolsVersion(1))
-				throw new ProgramException($"Couldn't patch project ToolsVersion attribute, file '{project.Filename}'");
+			if (!TryPatchToolsVersion(0) && !TryPatchToolsVersion(1)) {
+				return;
+			}
 		}
 
 		bool TryPatchToolsVersion(int index) {

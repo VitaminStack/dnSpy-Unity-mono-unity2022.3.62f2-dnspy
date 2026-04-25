@@ -79,7 +79,16 @@ namespace UnityMonoDllSourceCodePatcher {
 
 			FileUtils.CopyFilesFromTo(unityRepo.RepoPath, dnSpyVersionPath);
 			foreach (var dir in UnityFoldersToCopy) {
-				var sourceDir = PathCombine(unityRepo.RepoPath, dir);
+				if (dir == "unity")
+					continue;
+			
+				var sourceDir =
+					dir == "eglib"
+						? PathCombine(PathCombine(unityRepo.RepoPath, "mono"), "eglib")
+					: dir == "libgc"
+						? PathCombine(PathCombine(unityRepo.RepoPath, "external"), "bdwgc")
+					: PathCombine(unityRepo.RepoPath, dir);
+			
 				var destinationDir = PathCombine(dnSpyVersionPath, dir);
 				FileUtils.CopyDirectoryFromTo(sourceDir, destinationDir);
 			}
